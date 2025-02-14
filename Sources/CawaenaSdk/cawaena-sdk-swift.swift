@@ -1088,7 +1088,6 @@ extension __swift_bridge__$Option$WalletTxInfo {
 }
 public enum Currency {
     case Iota
-    case Smr
     case Eth
 }
 extension Currency {
@@ -1096,8 +1095,6 @@ extension Currency {
         switch self {
             case Currency.Iota:
                 return __swift_bridge__$Currency(tag: __swift_bridge__$Currency$Iota)
-            case Currency.Smr:
-                return __swift_bridge__$Currency(tag: __swift_bridge__$Currency$Smr)
             case Currency.Eth:
                 return __swift_bridge__$Currency(tag: __swift_bridge__$Currency$Eth)
         }
@@ -1108,8 +1105,6 @@ extension __swift_bridge__$Currency {
         switch self.tag {
             case __swift_bridge__$Currency$Iota:
                 return Currency.Iota
-            case __swift_bridge__$Currency$Smr:
-                return Currency.Smr
             case __swift_bridge__$Currency$Eth:
                 return Currency.Eth
             default:
@@ -1174,7 +1169,6 @@ extension Currency: Vectorizable {
 public enum PreferredCurrency {
     case None
     case Iota
-    case Smr
     case Eth
 }
 extension PreferredCurrency {
@@ -1184,8 +1178,6 @@ extension PreferredCurrency {
                 return __swift_bridge__$PreferredCurrency(tag: __swift_bridge__$PreferredCurrency$None)
             case PreferredCurrency.Iota:
                 return __swift_bridge__$PreferredCurrency(tag: __swift_bridge__$PreferredCurrency$Iota)
-            case PreferredCurrency.Smr:
-                return __swift_bridge__$PreferredCurrency(tag: __swift_bridge__$PreferredCurrency$Smr)
             case PreferredCurrency.Eth:
                 return __swift_bridge__$PreferredCurrency(tag: __swift_bridge__$PreferredCurrency$Eth)
         }
@@ -1198,8 +1190,6 @@ extension __swift_bridge__$PreferredCurrency {
                 return PreferredCurrency.None
             case __swift_bridge__$PreferredCurrency$Iota:
                 return PreferredCurrency.Iota
-            case __swift_bridge__$PreferredCurrency$Smr:
-                return PreferredCurrency.Smr
             case __swift_bridge__$PreferredCurrency$Eth:
                 return PreferredCurrency.Eth
             default:
