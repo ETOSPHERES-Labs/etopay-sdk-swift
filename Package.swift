@@ -16,7 +16,7 @@ let package = Package(
 	targets: [
 		.binaryTarget(
 			name: "ETOPaySdkBin",
-			url: "https://github.com/ETOSPHERES-Labs/etopay-sdk-swift/releases/download/nightly/ETOPaySdkBin.xcframework-6d24985.zip", checksum: "6c7cbb5022c5b6ed71a148db3dec2c08de74da3d4822e128c0fbb441155ff03a"
+			url: "https://github.com/ETOSPHERES-Labs/etopay-sdk-swift/releases/download/nightly/ETOPaySdkBin.xcframework-6f62780.zip", checksum: "3b33693ced87e7f48adcf2ebd3a5885622a80322e780cfc2c15272c5a32fb819"
 		),
 		.target(
 			name: "ETOPaySdk",
