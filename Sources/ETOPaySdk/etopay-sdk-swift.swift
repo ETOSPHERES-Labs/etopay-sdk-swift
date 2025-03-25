@@ -1624,8 +1624,8 @@ extension WalletTxInfoRef {
         __swift_bridge__$WalletTxInfo$amount(ptr)
     }
 
-    public func network() -> RustString {
-        RustString(ptr: __swift_bridge__$WalletTxInfo$network(ptr))
+    public func network_key() -> RustString {
+        RustString(ptr: __swift_bridge__$WalletTxInfo$network_key(ptr))
     }
 
     public func status() -> RustString {
@@ -1712,12 +1712,12 @@ public class NetworkRef {
     }
 }
 extension NetworkRef {
-    public func id() -> RustString {
-        RustString(ptr: __swift_bridge__$Network$id(ptr))
+    public func key() -> RustString {
+        RustString(ptr: __swift_bridge__$Network$key(ptr))
     }
 
-    public func name() -> RustString {
-        RustString(ptr: __swift_bridge__$Network$name(ptr))
+    public func display_name() -> RustString {
+        RustString(ptr: __swift_bridge__$Network$display_name(ptr))
     }
 }
 extension Network: Vectorizable {
@@ -1859,7 +1859,7 @@ extension ETOPaySdkRef {
         }
     }
 
-    public func setNetwork<GenericIntoRustString: IntoRustString>(_ network_id: GenericIntoRustString) async throws -> () {
+    public func setNetwork<GenericIntoRustString: IntoRustString>(_ network_key: GenericIntoRustString) async throws -> () {
         func onComplete(cbWrapperPtr: UnsafeMutableRawPointer?, rustFnRetVal: UnsafeMutableRawPointer?) {
             let wrapper = Unmanaged<CbWrapper$ETOPaySdk$set_network>.fromOpaque(cbWrapperPtr!).takeRetainedValue()
             if rustFnRetVal == nil {
@@ -1877,7 +1877,7 @@ extension ETOPaySdkRef {
             let wrapper = CbWrapper$ETOPaySdk$set_network(cb: callback)
             let wrapperPtr = Unmanaged.passRetained(wrapper).toOpaque()
 
-            __swift_bridge__$ETOPaySdk$set_network(wrapperPtr, onComplete, ptr, { let rustString = network_id.intoRustString(); rustString.isOwned = false; return rustString.ptr }())
+            __swift_bridge__$ETOPaySdk$set_network(wrapperPtr, onComplete, ptr, { let rustString = network_key.intoRustString(); rustString.isOwned = false; return rustString.ptr }())
         })
     }
     class CbWrapper$ETOPaySdk$set_network {
@@ -3245,7 +3245,7 @@ extension ETOPaySdkRef {
         }
     }
 
-    public func setPreferredNetwork<GenericIntoRustString: IntoRustString>(_ network_id: Optional<GenericIntoRustString>) async throws -> () {
+    public func setPreferredNetwork<GenericIntoRustString: IntoRustString>(_ network_key: Optional<GenericIntoRustString>) async throws -> () {
         func onComplete(cbWrapperPtr: UnsafeMutableRawPointer?, rustFnRetVal: UnsafeMutableRawPointer?) {
             let wrapper = Unmanaged<CbWrapper$ETOPaySdk$set_preferred_network>.fromOpaque(cbWrapperPtr!).takeRetainedValue()
             if rustFnRetVal == nil {
@@ -3263,7 +3263,7 @@ extension ETOPaySdkRef {
             let wrapper = CbWrapper$ETOPaySdk$set_preferred_network(cb: callback)
             let wrapperPtr = Unmanaged.passRetained(wrapper).toOpaque()
 
-            __swift_bridge__$ETOPaySdk$set_preferred_network(wrapperPtr, onComplete, ptr, { if let rustString = optionalStringIntoRustString(network_id) { rustString.isOwned = false; return rustString.ptr } else { return nil } }())
+            __swift_bridge__$ETOPaySdk$set_preferred_network(wrapperPtr, onComplete, ptr, { if let rustString = optionalStringIntoRustString(network_key) { rustString.isOwned = false; return rustString.ptr } else { return nil } }())
         })
     }
     class CbWrapper$ETOPaySdk$set_preferred_network {
