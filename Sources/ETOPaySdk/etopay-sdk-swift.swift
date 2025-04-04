@@ -1685,6 +1685,91 @@ extension WalletTxInfo: Vectorizable {
     }
 }
 
+public enum Protocol {
+    case Evm
+    case EvmERC20
+    case Stardust
+}
+extension Protocol {
+    func intoFfiRepr() -> __swift_bridge__$Protocol {
+        switch self {
+            case Protocol.Evm:
+                return __swift_bridge__$Protocol(tag: __swift_bridge__$Protocol$Evm)
+            case Protocol.EvmERC20:
+                return __swift_bridge__$Protocol(tag: __swift_bridge__$Protocol$EvmERC20)
+            case Protocol.Stardust:
+                return __swift_bridge__$Protocol(tag: __swift_bridge__$Protocol$Stardust)
+        }
+    }
+}
+extension __swift_bridge__$Protocol {
+    func intoSwiftRepr() -> Protocol {
+        switch self.tag {
+            case __swift_bridge__$Protocol$Evm:
+                return Protocol.Evm
+            case __swift_bridge__$Protocol$EvmERC20:
+                return Protocol.EvmERC20
+            case __swift_bridge__$Protocol$Stardust:
+                return Protocol.Stardust
+            default:
+                fatalError("Unreachable")
+        }
+    }
+}
+extension __swift_bridge__$Option$Protocol {
+    @inline(__always)
+    func intoSwiftRepr() -> Optional<Protocol> {
+        if self.is_some {
+            return self.val.intoSwiftRepr()
+        } else {
+            return nil
+        }
+    }
+    @inline(__always)
+    static func fromSwiftRepr(_ val: Optional<Protocol>) -> __swift_bridge__$Option$Protocol {
+        if let v = val {
+            return __swift_bridge__$Option$Protocol(is_some: true, val: v.intoFfiRepr())
+        } else {
+            return __swift_bridge__$Option$Protocol(is_some: false, val: __swift_bridge__$Protocol())
+        }
+    }
+}
+extension Protocol: Vectorizable {
+    public static func vecOfSelfNew() -> UnsafeMutableRawPointer {
+        __swift_bridge__$Vec_Protocol$new()
+    }
+
+    public static func vecOfSelfFree(vecPtr: UnsafeMutableRawPointer) {
+        __swift_bridge__$Vec_Protocol$drop(vecPtr)
+    }
+
+    public static func vecOfSelfPush(vecPtr: UnsafeMutableRawPointer, value: Self) {
+        __swift_bridge__$Vec_Protocol$push(vecPtr, value.intoFfiRepr())
+    }
+
+    public static func vecOfSelfPop(vecPtr: UnsafeMutableRawPointer) -> Optional<Self> {
+        let maybeEnum = __swift_bridge__$Vec_Protocol$pop(vecPtr)
+        return maybeEnum.intoSwiftRepr()
+    }
+
+    public static func vecOfSelfGet(vecPtr: UnsafeMutableRawPointer, index: UInt) -> Optional<Self> {
+        let maybeEnum = __swift_bridge__$Vec_Protocol$get(vecPtr, index)
+        return maybeEnum.intoSwiftRepr()
+    }
+
+    public static func vecOfSelfGetMut(vecPtr: UnsafeMutableRawPointer, index: UInt) -> Optional<Self> {
+        let maybeEnum = __swift_bridge__$Vec_Protocol$get_mut(vecPtr, index)
+        return maybeEnum.intoSwiftRepr()
+    }
+
+    public static func vecOfSelfAsPtr(vecPtr: UnsafeMutableRawPointer) -> UnsafePointer<Self> {
+        UnsafePointer<Self>(OpaquePointer(__swift_bridge__$Vec_Protocol$as_ptr(vecPtr)))
+    }
+
+    public static func vecOfSelfLen(vecPtr: UnsafeMutableRawPointer) -> UInt {
+        __swift_bridge__$Vec_Protocol$len(vecPtr)
+    }
+}
 
 public class Network: NetworkRefMut {
     var isOwned: Bool = true
@@ -1716,8 +1801,48 @@ extension NetworkRef {
         RustString(ptr: __swift_bridge__$Network$key(ptr))
     }
 
+    public func is_testnet() -> Bool {
+        __swift_bridge__$Network$is_testnet(ptr)
+    }
+
     public func display_name() -> RustString {
         RustString(ptr: __swift_bridge__$Network$display_name(ptr))
+    }
+
+    public func display_symbol() -> RustString {
+        RustString(ptr: __swift_bridge__$Network$display_symbol(ptr))
+    }
+
+    public func coin_type() -> UInt32 {
+        __swift_bridge__$Network$coin_type(ptr)
+    }
+
+    public func node_urls() -> RustVec<RustString> {
+        RustVec(ptr: __swift_bridge__$Network$node_urls(ptr))
+    }
+
+    public func decimals() -> UInt32 {
+        __swift_bridge__$Network$decimals(ptr)
+    }
+
+    public func can_do_purchases() -> Bool {
+        __swift_bridge__$Network$can_do_purchases(ptr)
+    }
+
+    public func block_explorer_url() -> RustString {
+        RustString(ptr: __swift_bridge__$Network$block_explorer_url(ptr))
+    }
+
+    public func protocol_type() -> Protocol {
+        __swift_bridge__$Network$protocol_type(ptr).intoSwiftRepr()
+    }
+
+    public func protocol_chain_id() -> Optional<UInt64> {
+        __swift_bridge__$Network$protocol_chain_id(ptr).intoSwiftRepr()
+    }
+
+    public func protocol_contract_address() -> Optional<RustString> {
+        { let val = __swift_bridge__$Network$protocol_contract_address(ptr); if val != nil { return RustString(ptr: val!) } else { return nil } }()
     }
 }
 extension Network: Vectorizable {
