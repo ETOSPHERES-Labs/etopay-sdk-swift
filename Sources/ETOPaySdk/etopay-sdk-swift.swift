@@ -1689,6 +1689,7 @@ public enum Protocol {
     case Evm
     case EvmERC20
     case Stardust
+    case IotaRebased
 }
 extension Protocol {
     func intoFfiRepr() -> __swift_bridge__$Protocol {
@@ -1699,6 +1700,8 @@ extension Protocol {
                 return __swift_bridge__$Protocol(tag: __swift_bridge__$Protocol$EvmERC20)
             case Protocol.Stardust:
                 return __swift_bridge__$Protocol(tag: __swift_bridge__$Protocol$Stardust)
+            case Protocol.IotaRebased:
+                return __swift_bridge__$Protocol(tag: __swift_bridge__$Protocol$IotaRebased)
         }
     }
 }
@@ -1711,6 +1714,8 @@ extension __swift_bridge__$Protocol {
                 return Protocol.EvmERC20
             case __swift_bridge__$Protocol$Stardust:
                 return Protocol.Stardust
+            case __swift_bridge__$Protocol$IotaRebased:
+                return Protocol.IotaRebased
             default:
                 fatalError("Unreachable")
         }
