@@ -232,6 +232,47 @@ extension __swift_bridge__$Option$PurchaseDetails {
         }
     }
 }
+public struct GasCostEstimation {
+    public var max_fee_per_gas: RustString
+    public var max_priority_fee_per_gas: RustString
+    public var gas_limit: RustString
+
+    public init(max_fee_per_gas: RustString,max_priority_fee_per_gas: RustString,gas_limit: RustString) {
+        self.max_fee_per_gas = max_fee_per_gas
+        self.max_priority_fee_per_gas = max_priority_fee_per_gas
+        self.gas_limit = gas_limit
+    }
+
+    @inline(__always)
+    func intoFfiRepr() -> __swift_bridge__$GasCostEstimation {
+        { let val = self; return __swift_bridge__$GasCostEstimation(max_fee_per_gas: { let rustString = val.max_fee_per_gas.intoRustString(); rustString.isOwned = false; return rustString.ptr }(), max_priority_fee_per_gas: { let rustString = val.max_priority_fee_per_gas.intoRustString(); rustString.isOwned = false; return rustString.ptr }(), gas_limit: { let rustString = val.gas_limit.intoRustString(); rustString.isOwned = false; return rustString.ptr }()); }()
+    }
+}
+extension __swift_bridge__$GasCostEstimation {
+    @inline(__always)
+    func intoSwiftRepr() -> GasCostEstimation {
+        { let val = self; return GasCostEstimation(max_fee_per_gas: RustString(ptr: val.max_fee_per_gas), max_priority_fee_per_gas: RustString(ptr: val.max_priority_fee_per_gas), gas_limit: RustString(ptr: val.gas_limit)); }()
+    }
+}
+extension __swift_bridge__$Option$GasCostEstimation {
+    @inline(__always)
+    func intoSwiftRepr() -> Optional<GasCostEstimation> {
+        if self.is_some {
+            return self.val.intoSwiftRepr()
+        } else {
+            return nil
+        }
+    }
+
+    @inline(__always)
+    static func fromSwiftRepr(_ val: Optional<GasCostEstimation>) -> __swift_bridge__$Option$GasCostEstimation {
+        if let v = val {
+            return __swift_bridge__$Option$GasCostEstimation(is_some: true, val: v.intoFfiRepr())
+        } else {
+            return __swift_bridge__$Option$GasCostEstimation(is_some: false, val: __swift_bridge__$GasCostEstimation())
+        }
+    }
+}
 public struct NewViviswapUser {
     public var username: RustString
 
@@ -2960,6 +3001,31 @@ extension ETOPaySdkRef {
         var cb: (Result<RustString, Error>) -> ()
     
         public init(cb: @escaping (Result<RustString, Error>) -> ()) {
+            self.cb = cb
+        }
+    }
+
+    public func estimateGas<GenericIntoRustString: IntoRustString>(_ pin: GenericIntoRustString, _ address: GenericIntoRustString, _ amount: Double, _ data: Optional<RustVec<UInt8>>) async throws -> GasCostEstimation {
+        func onComplete(cbWrapperPtr: UnsafeMutableRawPointer?, rustFnRetVal: __swift_bridge__$ResultGasCostEstimationAndString) {
+            let wrapper = Unmanaged<CbWrapper$ETOPaySdk$estimate_gas>.fromOpaque(cbWrapperPtr!).takeRetainedValue()
+            switch rustFnRetVal.tag { case __swift_bridge__$ResultGasCostEstimationAndString$ResultOk: wrapper.cb(.success(rustFnRetVal.payload.ok.intoSwiftRepr())) case __swift_bridge__$ResultGasCostEstimationAndString$ResultErr: wrapper.cb(.failure(RustString(ptr: rustFnRetVal.payload.err))) default: fatalError() }
+        }
+
+        return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<GasCostEstimation, Error>) in
+            let callback = { rustFnRetVal in
+                continuation.resume(with: rustFnRetVal)
+            }
+
+            let wrapper = CbWrapper$ETOPaySdk$estimate_gas(cb: callback)
+            let wrapperPtr = Unmanaged.passRetained(wrapper).toOpaque()
+
+            __swift_bridge__$ETOPaySdk$estimate_gas(wrapperPtr, onComplete, ptr, { let rustString = pin.intoRustString(); rustString.isOwned = false; return rustString.ptr }(), { let rustString = address.intoRustString(); rustString.isOwned = false; return rustString.ptr }(), amount, { if let val = data { val.isOwned = false; return val.ptr } else { return nil } }())
+        })
+    }
+    class CbWrapper$ETOPaySdk$estimate_gas {
+        var cb: (Result<GasCostEstimation, Error>) -> ()
+    
+        public init(cb: @escaping (Result<GasCostEstimation, Error>) -> ()) {
             self.cb = cb
         }
     }
