@@ -1614,6 +1614,91 @@ extension TxInfo: Vectorizable {
     }
 }
 
+public enum WalletTxStatus {
+    case Pending
+    case Confirmed
+    case Conflicting
+}
+extension WalletTxStatus {
+    func intoFfiRepr() -> __swift_bridge__$WalletTxStatus {
+        switch self {
+            case WalletTxStatus.Pending:
+                return __swift_bridge__$WalletTxStatus(tag: __swift_bridge__$WalletTxStatus$Pending)
+            case WalletTxStatus.Confirmed:
+                return __swift_bridge__$WalletTxStatus(tag: __swift_bridge__$WalletTxStatus$Confirmed)
+            case WalletTxStatus.Conflicting:
+                return __swift_bridge__$WalletTxStatus(tag: __swift_bridge__$WalletTxStatus$Conflicting)
+        }
+    }
+}
+extension __swift_bridge__$WalletTxStatus {
+    func intoSwiftRepr() -> WalletTxStatus {
+        switch self.tag {
+            case __swift_bridge__$WalletTxStatus$Pending:
+                return WalletTxStatus.Pending
+            case __swift_bridge__$WalletTxStatus$Confirmed:
+                return WalletTxStatus.Confirmed
+            case __swift_bridge__$WalletTxStatus$Conflicting:
+                return WalletTxStatus.Conflicting
+            default:
+                fatalError("Unreachable")
+        }
+    }
+}
+extension __swift_bridge__$Option$WalletTxStatus {
+    @inline(__always)
+    func intoSwiftRepr() -> Optional<WalletTxStatus> {
+        if self.is_some {
+            return self.val.intoSwiftRepr()
+        } else {
+            return nil
+        }
+    }
+    @inline(__always)
+    static func fromSwiftRepr(_ val: Optional<WalletTxStatus>) -> __swift_bridge__$Option$WalletTxStatus {
+        if let v = val {
+            return __swift_bridge__$Option$WalletTxStatus(is_some: true, val: v.intoFfiRepr())
+        } else {
+            return __swift_bridge__$Option$WalletTxStatus(is_some: false, val: __swift_bridge__$WalletTxStatus())
+        }
+    }
+}
+extension WalletTxStatus: Vectorizable {
+    public static func vecOfSelfNew() -> UnsafeMutableRawPointer {
+        __swift_bridge__$Vec_WalletTxStatus$new()
+    }
+
+    public static func vecOfSelfFree(vecPtr: UnsafeMutableRawPointer) {
+        __swift_bridge__$Vec_WalletTxStatus$drop(vecPtr)
+    }
+
+    public static func vecOfSelfPush(vecPtr: UnsafeMutableRawPointer, value: Self) {
+        __swift_bridge__$Vec_WalletTxStatus$push(vecPtr, value.intoFfiRepr())
+    }
+
+    public static func vecOfSelfPop(vecPtr: UnsafeMutableRawPointer) -> Optional<Self> {
+        let maybeEnum = __swift_bridge__$Vec_WalletTxStatus$pop(vecPtr)
+        return maybeEnum.intoSwiftRepr()
+    }
+
+    public static func vecOfSelfGet(vecPtr: UnsafeMutableRawPointer, index: UInt) -> Optional<Self> {
+        let maybeEnum = __swift_bridge__$Vec_WalletTxStatus$get(vecPtr, index)
+        return maybeEnum.intoSwiftRepr()
+    }
+
+    public static func vecOfSelfGetMut(vecPtr: UnsafeMutableRawPointer, index: UInt) -> Optional<Self> {
+        let maybeEnum = __swift_bridge__$Vec_WalletTxStatus$get_mut(vecPtr, index)
+        return maybeEnum.intoSwiftRepr()
+    }
+
+    public static func vecOfSelfAsPtr(vecPtr: UnsafeMutableRawPointer) -> UnsafePointer<Self> {
+        UnsafePointer<Self>(OpaquePointer(__swift_bridge__$Vec_WalletTxStatus$as_ptr(vecPtr)))
+    }
+
+    public static func vecOfSelfLen(vecPtr: UnsafeMutableRawPointer) -> UInt {
+        __swift_bridge__$Vec_WalletTxStatus$len(vecPtr)
+    }
+}
 
 public class WalletTxInfo: WalletTxInfoRefMut {
     var isOwned: Bool = true
@@ -1645,20 +1730,24 @@ extension WalletTxInfoRef {
         RustString(ptr: __swift_bridge__$WalletTxInfo$date(ptr))
     }
 
-    public func block_id() -> RustString {
-        RustString(ptr: __swift_bridge__$WalletTxInfo$block_id(ptr))
+    public func block_number() -> Optional<UInt64> {
+        __swift_bridge__$WalletTxInfo$block_number(ptr).intoSwiftRepr()
     }
 
-    public func transaction_id() -> RustString {
-        RustString(ptr: __swift_bridge__$WalletTxInfo$transaction_id(ptr))
+    public func block_hash() -> Optional<RustString> {
+        { let val = __swift_bridge__$WalletTxInfo$block_hash(ptr); if val != nil { return RustString(ptr: val!) } else { return nil } }()
+    }
+
+    public func transaction_hash() -> RustString {
+        RustString(ptr: __swift_bridge__$WalletTxInfo$transaction_hash(ptr))
+    }
+
+    public func sender() -> RustString {
+        RustString(ptr: __swift_bridge__$WalletTxInfo$sender(ptr))
     }
 
     public func receiver() -> RustString {
         RustString(ptr: __swift_bridge__$WalletTxInfo$receiver(ptr))
-    }
-
-    public func incoming() -> Bool {
-        __swift_bridge__$WalletTxInfo$incoming(ptr)
     }
 
     public func amount() -> Double {
@@ -1669,8 +1758,8 @@ extension WalletTxInfoRef {
         RustString(ptr: __swift_bridge__$WalletTxInfo$network_key(ptr))
     }
 
-    public func status() -> RustString {
-        RustString(ptr: __swift_bridge__$WalletTxInfo$status(ptr))
+    public func status() -> WalletTxStatus {
+        __swift_bridge__$WalletTxInfo$status(ptr).intoSwiftRepr()
     }
 
     public func explorer_url() -> RustString {
