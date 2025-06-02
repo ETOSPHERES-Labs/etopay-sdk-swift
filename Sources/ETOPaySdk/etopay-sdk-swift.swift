@@ -1818,7 +1818,6 @@ extension WalletTxInfo: Vectorizable {
 public enum Protocol {
     case Evm
     case EvmERC20
-    case Stardust
     case IotaRebased
 }
 extension Protocol {
@@ -1828,8 +1827,6 @@ extension Protocol {
                 return __swift_bridge__$Protocol(tag: __swift_bridge__$Protocol$Evm)
             case Protocol.EvmERC20:
                 return __swift_bridge__$Protocol(tag: __swift_bridge__$Protocol$EvmERC20)
-            case Protocol.Stardust:
-                return __swift_bridge__$Protocol(tag: __swift_bridge__$Protocol$Stardust)
             case Protocol.IotaRebased:
                 return __swift_bridge__$Protocol(tag: __swift_bridge__$Protocol$IotaRebased)
         }
@@ -1842,8 +1839,6 @@ extension __swift_bridge__$Protocol {
                 return Protocol.Evm
             case __swift_bridge__$Protocol$EvmERC20:
                 return Protocol.EvmERC20
-            case __swift_bridge__$Protocol$Stardust:
-                return Protocol.Stardust
             case __swift_bridge__$Protocol$IotaRebased:
                 return Protocol.IotaRebased
             default:
