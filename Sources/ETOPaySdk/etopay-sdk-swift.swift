@@ -3380,6 +3380,35 @@ extension ETOPaySdkRef {
         }
     }
 
+    public func setWalletAccount(_ account: UInt32, _ index: UInt32) async throws -> () {
+        func onComplete(cbWrapperPtr: UnsafeMutableRawPointer?, rustFnRetVal: UnsafeMutableRawPointer?) {
+            let wrapper = Unmanaged<CbWrapper$ETOPaySdk$set_wallet_account>.fromOpaque(cbWrapperPtr!).takeRetainedValue()
+            if rustFnRetVal == nil {
+                wrapper.cb(.success(()))
+            } else {
+                wrapper.cb(.failure(RustString(ptr: rustFnRetVal!)))
+            }
+        }
+
+        return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<(), Error>) in
+            let callback = { rustFnRetVal in
+                continuation.resume(with: rustFnRetVal)
+            }
+
+            let wrapper = CbWrapper$ETOPaySdk$set_wallet_account(cb: callback)
+            let wrapperPtr = Unmanaged.passRetained(wrapper).toOpaque()
+
+            __swift_bridge__$ETOPaySdk$set_wallet_account(wrapperPtr, onComplete, ptr, account, index)
+        })
+    }
+    class CbWrapper$ETOPaySdk$set_wallet_account {
+        var cb: (Result<(), Error>) -> ()
+    
+        public init(cb: @escaping (Result<(), Error>) -> ()) {
+            self.cb = cb
+        }
+    }
+
     public func getWalletTransactionList<GenericIntoRustString: IntoRustString>(_ pin: GenericIntoRustString, _ start: UInt, _ limit: UInt) async throws -> RustVec<WalletTxInfo> {
         func onComplete(cbWrapperPtr: UnsafeMutableRawPointer?, rustFnRetVal: __private__ResultPtrAndPtr) {
             let wrapper = Unmanaged<CbWrapper$ETOPaySdk$get_wallet_transaction_list>.fromOpaque(cbWrapperPtr!).takeRetainedValue()
